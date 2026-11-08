@@ -1,6 +1,8 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import joblib
 
 st.set_page_config(
@@ -39,3 +41,15 @@ if st.button("Predict Solar Power"):
     prediction=model.predict(input_data)
 
     st.success(f"Predicted AC Power:{prediction[0]:.3f}")
+
+st.header("Country Performance Analysis")
+dataset=pd.read_csv("data/Solar data.csv")
+st.subheader("Average AC Power by Country")
+fig,ax=plt.subplots(figsize=(8,5))
+sns.barplot(x="Country",y="AC_Power",data=dataset,ax=ax)
+ax.set_title("Average AC Power by Country")
+ax.set_xlabel("Country")
+ax.set_ylabel("Average AC Power")
+ax.tick_params(axis="x",rotation=0)
+st.pyplot(fig)
+plt.close(fig)
