@@ -65,9 +65,19 @@ st.subheader("Test Set Performance")
 st.dataframe(metrics)
 
 st.header("Feature Importance Analysis")
-importance = pd.DataFrame(
-    {
+importance = pd.DataFrame({
     "Feature":model.named_steps["preprocessor"].get_feature_names_out(),
     "Importance":model.named_steps["regressor"].feature_importances_
 })
 st.bar_chart(importance.set_index("Feature"))
+
+st.header("Monthly Solar Power Analysis")
+st.subheader("Average AC Power by Month")
+monthly_data=dataset.groupby("Month")["AC_Power"].mean().reset_index()
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.lineplot(data=monthly_data, x="Month", y="AC_Power", ax=ax)
+ax.set_xlabel("Month")
+ax.set_ylabel("Average AC Power")
+ax.set_title("Monthly Average AC Power")
+st.pyplot(fig)
+plt.close(fig)
