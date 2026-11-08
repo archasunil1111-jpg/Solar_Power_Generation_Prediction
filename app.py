@@ -34,3 +34,6 @@ input_data=pd.DataFrame({
     "Hour":[hour],
     "Temperature_Difference":[temperature_difference]
 })
+
+if st.button("Predict Solar Power"):
+    prediction=model.predict(input_data)
