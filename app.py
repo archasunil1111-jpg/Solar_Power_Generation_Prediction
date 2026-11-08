@@ -21,3 +21,5 @@ irradiation=st.number_input("Irradiation",min_value=0.0,max_value=1.3,value=0.5)
 day=st.number_input("Day",min_value=1,max_value=31,value=15)
 month=st.selectbox("Month",range(1,13))
 hour=st.number_input("Hour",min_value=0,max_value=23,value=12)
+
+temperature_difference=module_temp-ambient_temp
