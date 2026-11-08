@@ -92,3 +92,23 @@ ax.set_ylabel("Average AC Power")
 ax.set_title("Hourly Average AC Power")
 st.pyplot(fig)
 plt.close(fig)
+
+st.header("About the Project")
+st.write("""This project predicts solar power generation across four different countries
+using Machine Learning.
+The application uses a Tuned Random Forest model to predict AC Power
+based on country, temperature, irradiation, day, month and hour.
+""")
+st.subheader("Dataset Information")
+st.write("Total Records:",len(dataset))
+st.write("Countries:Norway,Brazil,India,Australia")
+st.subheader("Technologies Used")
+st.write("""
+- Python
+- Pandas
+- Numpy
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- Streamlit
+- Joblib""")
