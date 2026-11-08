@@ -23,3 +23,14 @@ month=st.selectbox("Month",range(1,13))
 hour=st.number_input("Hour",min_value=0,max_value=23,value=12)
 
 temperature_difference=module_temp-ambient_temp
+
+input_data=pd.DataFrame({
+    "Country":[country],
+    "Ambient_Temperature":[ambient_temp],
+    "Module_Temperature":[module_temp],
+    "Irradiation":[irradiation],
+    "Day":[day],
+    "Month":[month],
+    "Hour":[hour],
+    "Temperature_Difference":[temperature_difference]
+})
