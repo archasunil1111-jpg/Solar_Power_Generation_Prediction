@@ -63,3 +63,11 @@ metrics=pd.DataFrame({
 })
 st.subheader("Test Set Performance")
 st.dataframe(metrics)
+
+st.header("Feature Importance Analysis")
+importance = pd.DataFrame(
+    {
+    "Feature":model.named_steps["preprocessor"].get_feature_names_out(),
+    "Importance":model.named_steps["regressor"].feature_importances_
+})
+st.bar_chart(importance.set_index("Feature"))
