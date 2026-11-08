@@ -37,3 +37,5 @@ input_data=pd.DataFrame({
 
 if st.button("Predict Solar Power"):
     prediction=model.predict(input_data)
+
+    st.success(f"Predicted AC Power:{prediction[0]:.3f}")
