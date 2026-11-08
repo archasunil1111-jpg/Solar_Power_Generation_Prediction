@@ -53,3 +53,13 @@ ax.set_ylabel("Average AC Power")
 ax.tick_params(axis="x",rotation=0)
 st.pyplot(fig)
 plt.close(fig)
+
+st.header("Model Performance Comparison")
+metrics=pd.DataFrame({
+    "Model":["Linear Regression","Decision Tree","Random Forest","Gradient Boosting","Voting Regressor","Tuned Random Forest"],
+    "MAE":[2.0695,0.8139,0.5977,0.6686,0.8792,0.5930],
+    "RMSE":[2.7795,1.5103,1.1191,1.1566,1.2918,1.0983],
+    "R2 Score":[0.981866,0.994646,0.997060,0.996860,0.996083,0.997169]
+})
+st.subheader("Test Set Performance")
+st.dataframe(metrics)
