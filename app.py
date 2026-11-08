@@ -10,3 +10,5 @@ st.set_page_config(
 
 st.title("SOLAR POWER GENERATION PREDICTION")
 st.write("Application of predicting solar power and generation across different countries using Machine Learning.")
+
+model=joblib.load("models/solar_power_model.pkl")
