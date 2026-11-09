@@ -61,6 +61,24 @@ if st.button("Predict Solar Power"):
     plt.close(fig)
 
 
+st.header("Interactive Country Comparison")
+if st.button("Compare All Countries"):
+    countries=["Norway","Brazil","India","Australia"]
+    results=[]
+    for i in countries:
+        comparison_input=input_data.copy()
+        comparison_input["Country"]=i
+        prediction=model.predict(comparison_input)
+        results.append({
+            "Country":i,
+            "Predicted AC Power":prediction[0]
+        })
+    comparison_df=pd.DataFrame(results)
+    st.subheader("Predicted AC Power by Country")
+    st.dataframe(comparison_df)
+    st.bar_chart(comparison_df.set_index("Country"))
+
+
 st.header("Country Performance Analysis")
 dataset=pd.read_csv("data/Solar data.csv")
 st.subheader("Average AC Power by Country")
