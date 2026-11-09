@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
+import shap
 
 st.set_page_config(
     page_title="Solar Power Prediction",
@@ -41,6 +42,24 @@ if st.button("Predict Solar Power"):
     prediction=model.predict(input_data)
 
     st.success(f"Predicted AC Power:{prediction[0]:.3f}")
+
+
+    st.header("SHAP Feature Explanation")
+    preprocessor=model.named_steps["preprocessor"]
+    regressor=model.named_steps["regressor"]
+    transformed_data=preprocessor.transform(input_data)
+    explainer=shap.TreeExplainer(regressor)
+    shap_values=explainer.shap_values(transformed_data)
+    explanation=shap.Explanation(values=shap_values[0],
+        base_values=explainer.expected_value[0],
+        data=transformed_data[0],
+        feature_names=preprocessor.get_feature_names_out()
+    )
+    shap.plots.waterfall(explanation, show=False)
+    fig = plt.gcf()
+    st.pyplot(fig)
+    plt.close(fig)
+
 
 st.header("Country Performance Analysis")
 dataset=pd.read_csv("data/Solar data.csv")
@@ -112,3 +131,5 @@ st.write("""
 - Scikit-learn
 - Streamlit
 - Joblib""")
+
+
