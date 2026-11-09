@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import shap
+from sklearn.model_selection import train_test_split
 
 st.set_page_config(
     page_title="Solar Power Prediction",
@@ -15,6 +16,7 @@ st.title("SOLAR POWER GENERATION PREDICTION")
 st.write("Application of predicting solar power and generation across different countries using Machine Learning.")
 
 model=joblib.load("models/solar_power_model.pkl")
+dataset=pd.read_csv("data/Solar data.csv")
 
 st.header("Enter Solar Panel Details")
 country=st.selectbox("Select Country",options=["Norway","Brazil","India","Australia"])
@@ -87,8 +89,25 @@ col2.metric("RMSE","1.0983")
 col3.metric("R2 Score",0.9972)
 
 
+st.header("Actual vs Predicted Power Analysis")
+X=dataset[["Country","Ambient_Temperature","Module_Temperature",
+     "Irradiation", "Day", "Month", "Hour"]].copy()
+X["Temperature_Difference"] = (X["Module_Temperature"]- X["Ambient_Temperature"])
+y=dataset["AC_Power"]
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
+y_pred=model.predict(X_test)
+
+
+st.subheader("Actual vs Predicted AC Power")
+fig,ax=plt.subplots(figsize=(8, 5))
+ax.scatter(y_test, y_pred,alpha=0.5)
+ax.set_xlabel("Actual AC Power")
+ax.set_ylabel("Predicted AC Power")
+ax.set_title("Actual vs Predicted AC Power")
+st.pyplot(fig)
+plt.close(fig)
+
 st.header("Country Performance Analysis")
-dataset=pd.read_csv("data/Solar data.csv")
 st.subheader("Average AC Power by Country")
 fig,ax=plt.subplots(figsize=(8,5))
 sns.barplot(x="Country",y="AC_Power",data=dataset,ax=ax)
