@@ -12,35 +12,43 @@ st.set_page_config(
     layout="wide"
 )
 
-page=st.sidebar.radio("Navigation",["Dashboard","Power Prediction","Country Analysis","Model Performance","SHAP Explanation","About Project"])
+st.sidebar.title("Solar Dashboard")
+st.sidebar.caption("Power Generation Analysis")
+with st.sidebar.container(border=True):
+  page=st.radio("Navigation",["Dashboard","Power Prediction","Country Analysis","Model Performance","SHAP Explanation","About Project"])
 if page=="Dashboard":
     st.title("SOLAR POWER GENERATION PREDICTION")
     st.markdown("Explore solar power generation and performance across "
         "Norway, Brazil, India and Australia using Machine Learning.")
     st.divider()
-    st.subheader("Dataset Overview")
-    col1,col2,col3=st.columns(3)
-    col1.metric("Total Records","35,136")
-    col2.metric("Countries","4")
-    col3.metric("Prediction Target","AC Power")
-    st.divider()
-    st.subheader("Best Model Performance")
-    st.caption("Tuned Random Forest Regressor")
-    col1,col2,col3=st.columns(3)
-    col1.metric("MAE","0.5930")
-    col2.metric("RMSE","1.0983")
-    col3.metric("R² Score","0.9972")
+    with st.container(border=True):
+      st.subheader("Dataset Overview")
+      col1,col2,col3=st.columns(3)
+      col1.metric("Total Records","35,136")
+      col2.metric("Countries","4")
+      col3.metric("Prediction Target","AC Power")
+    with st.container(border=True):
+      st.subheader("Best Model Performance")
+      st.caption("Tuned Random Forest Regressor")
+      col1,col2,col3=st.columns(3)
+      col1.metric("MAE","0.5930")
+      col2.metric("RMSE","1.0983")
+      col3.metric("R² Score","0.9972")
     st.divider()
     st.subheader("Key Project Features")
     col1, col2 = st.columns(2)
     with col1:
+      with st.container(border=True):
         st.markdown("**Power Prediction**")
         st.caption("Predict AC power using solar and environmental conditions.")
+      with st.container(border=True):
         st.markdown("**Country Analysis**")
         st.caption("Compare solar power generation across four countries.")
     with col2:
+      with st.container(border=True):
         st.markdown("**Model Evaluation**")
         st.caption("Compare machine learning models and their performance.")
+      with st.container(border=True):
         st.markdown("**SHAP Explainability**")
         st.caption("Understand which features influence model predictions.")
 
@@ -52,7 +60,8 @@ dataset=pd.read_csv("data/Solar data.csv")
 
 
 input_data=None
-if page in ["Power Prediction","Country Analysis"]:
+if page in ["Power Prediction","Country Analysis","SHAP Explanation"]:
+  st.header("Enter Solar Panel Details")
   country=st.selectbox("Select Country",options=["Norway","Brazil","India","Australia"])
   ambient_temp=st.number_input("Ambient Temperature",min_value=-12.0,max_value=40.0,value=25.0)
   module_temp=st.number_input("Module Temperature",min_value=-8.0,max_value=47.0,value=30.0)
@@ -74,28 +83,14 @@ if page in ["Power Prediction","Country Analysis"]:
     "Temperature_Difference":[temperature_difference]
   })
 if page=="Power Prediction":
- st.header("Enter Solar Panel Details")
+ st.header("Power Prediction")
  if st.button("Predict Solar Power"):
     prediction=model.predict(input_data)
 
     st.success(f"Predicted AC Power:{prediction[0]:.3f}")
 
 
-    st.header("SHAP Feature Explanation")
-    preprocessor=model.named_steps["preprocessor"]
-    regressor=model.named_steps["regressor"]
-    transformed_data=preprocessor.transform(input_data)
-    explainer=shap.TreeExplainer(regressor)
-    shap_values=explainer.shap_values(transformed_data)
-    explanation=shap.Explanation(values=shap_values[0],
-        base_values=explainer.expected_value[0],
-        data=transformed_data[0],
-        feature_names=preprocessor.get_feature_names_out()
-    )
-    shap.plots.waterfall(explanation, show=False)
-    fig = plt.gcf()
-    st.pyplot(fig)
-    plt.close(fig)
+    
 
 
 if page=="Country Analysis":
@@ -217,4 +212,20 @@ based on country, temperature, irradiation, day, month and hour.
 - Streamlit
 - Joblib""")
 
+if page=="SHAP Explanation":
+  st.header("SHAP Feature Explanation")
+  if st.button("Explain Prediction"):
+    preprocessor=model.named_steps["preprocessor"]
+    regressor=model.named_steps["regressor"]
+    transformed_data=preprocessor.transform(input_data)
+    explainer=shap.TreeExplainer(regressor)
+    shap_values=explainer.shap_values(transformed_data)
+    explanation=shap.Explanation(values=shap_values[0],
+            base_values=explainer.expected_value[0],
+            data=transformed_data[0],
+            feature_names=preprocessor.get_feature_names_out())
+    shap.plots.waterfall(explanation, show=False)
+    fig = plt.gcf()
+    st.pyplot(fig)
+    plt.close(fig)
 
