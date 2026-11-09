@@ -92,7 +92,7 @@ if page=="Power Prediction":
 
 
 if page=="Model Performance":
-  st.header("Actual vs Predicted Power Analysis")
+  st.markdown("## :green[Actual vs Predicted Power Analysis]")
   X=dataset[["Country","Ambient_Temperature","Module_Temperature",
      "Irradiation", "Day", "Month", "Hour"]].copy()
   X["Temperature_Difference"] = (X["Module_Temperature"]- X["Ambient_Temperature"])
@@ -132,7 +132,7 @@ if page=="Country Analysis":
   plt.close(fig)
 
 if page=="Model Performance":
-  st.header("Model Performance Comparison")
+  st.markdown("## :green[Model Performance Comparison]")
   metrics=pd.DataFrame({
     "Model":["Linear Regression","Decision Tree","Random Forest","Gradient Boosting","Voting Regressor","Tuned Random Forest"],
     "MAE":[2.0695,0.8139,0.5977,0.6686,0.8792,0.5930],
@@ -143,7 +143,7 @@ if page=="Model Performance":
   st.dataframe(metrics)
 
 if page=="Model Performance":
-  st.header("Feature Importance Analysis")
+  st.markdown("## :green[Feature Importance Analysis]")
   importance = pd.DataFrame({
     "Feature":model.named_steps["preprocessor"].get_feature_names_out(),
     "Importance":model.named_steps["regressor"].feature_importances_
