@@ -8,7 +8,7 @@ import shap
 from sklearn.model_selection import train_test_split
 
 st.set_page_config(
-    page_title="Solar Power Prediction",
+    page_title="Solar Power Generation Prediction",
     layout="wide"
 )
 
@@ -17,25 +17,25 @@ st.sidebar.caption("Power Generation Analysis")
 with st.sidebar.container(border=True):
   page=st.radio("Navigation",["Dashboard","Power Prediction","Country Analysis","Model Performance","SHAP Explanation","About Project"])
 if page=="Dashboard":
-    st.title("SOLAR POWER GENERATION PREDICTION")
+    st.markdown("# :green[SOLAR POWER GENERATION PREDICTION AND PERFORMANCE ANALYSIS]")
     st.markdown("Explore solar power generation and performance across "
         "Norway, Brazil, India and Australia using Machine Learning.")
     st.divider()
     with st.container(border=True):
-      st.subheader("Dataset Overview")
+      st.markdown("## :green[Dataset Overview]")
       col1,col2,col3=st.columns(3)
       col1.metric("Total Records","35,136")
       col2.metric("Countries","4")
       col3.metric("Prediction Target","AC Power")
     with st.container(border=True):
-      st.subheader("Best Model Performance")
+      st.markdown("## :green[Best Model Performance]")
       st.caption("Tuned Random Forest Regressor")
       col1,col2,col3=st.columns(3)
       col1.metric("MAE","0.5930")
       col2.metric("RMSE","1.0983")
       col3.metric("R² Score","0.9972")
     st.divider()
-    st.subheader("Key Project Features")
+    st.markdown("## :green[Key Project Features]")
     col1, col2 = st.columns(2)
     with col1:
       with st.container(border=True):
@@ -60,7 +60,7 @@ dataset=pd.read_csv("data/Solar data.csv")
 
 
 input_data=None
-if page in ["Power Prediction","Country Analysis","SHAP Explanation"]:
+if page in ["Power Prediction","SHAP Explanation"]:
   st.header("Enter Solar Panel Details")
   country=st.selectbox("Select Country",options=["Norway","Brazil","India","Australia"])
   ambient_temp=st.number_input("Ambient Temperature",min_value=-12.0,max_value=40.0,value=25.0)
@@ -90,32 +90,6 @@ if page=="Power Prediction":
     st.success(f"Predicted AC Power:{prediction[0]:.3f}")
 
 
-    
-
-
-if page=="Country Analysis":
-    st.header("Interactive Country Comparison")
-    if st.button("Compare All Countries"):
-        countries=["Norway","Brazil","India","Australia"]
-        results=[]
-        for i in countries:
-           comparison_input=input_data.copy()
-           comparison_input["Country"]=i
-           prediction=model.predict(comparison_input)
-           results.append({
-            "Country":i,
-            "Predicted AC Power":prediction[0]
-           })
-        comparison_df=pd.DataFrame(results)
-        st.subheader("Predicted AC Power by Country")
-        st.dataframe(comparison_df)
-        st.bar_chart(comparison_df.set_index("Country"))
-
-
-
-
-
-
 
 if page=="Model Performance":
   st.header("Actual vs Predicted Power Analysis")
@@ -128,24 +102,33 @@ if page=="Model Performance":
 
 
   st.subheader("Actual vs Predicted AC Power")
-  fig,ax=plt.subplots(figsize=(8, 5))
+  fig,ax=plt.subplots(figsize=(7,3.5))
   ax.scatter(y_test, y_pred,alpha=0.5)
   ax.set_xlabel("Actual AC Power")
   ax.set_ylabel("Predicted AC Power")
   ax.set_title("Actual vs Predicted AC Power")
-  st.pyplot(fig)
+  st.pyplot(fig,width=600)
   plt.close(fig)
 
 if page=="Country Analysis":
   st.header("Country Performance Analysis")
+  selected_country=st.selectbox("Select Country",
+        ["All Countries", "Norway", "Brazil", "India", "Australia"])
+  if selected_country=="All Countries":
+    country_data=dataset.copy()
+  else:
+    country_data=dataset[dataset["Country"]==selected_country]
   st.subheader("Average AC Power by Country")
-  fig,ax=plt.subplots(figsize=(8,5))
+  fig,ax=plt.subplots(figsize=(7,3.5))
   sns.barplot(x="Country",y="AC_Power",data=dataset,ax=ax)
-  ax.set_title("Average AC Power by Country")
-  ax.set_xlabel("Country")
-  ax.set_ylabel("Average AC Power")
+  ax.set_title("Average AC Power by Country",fontsize=12)
+  ax.set_xlabel("Country",fontsize=10)
+  ax.set_ylabel("Average AC Power",fontsize=10)
   ax.tick_params(axis="x",rotation=0)
-  st.pyplot(fig)
+  ax.grid(axis="y",linestyle="--",alpha=0.3)
+  ax.spines["top"].set_visible(False)
+  ax.spines["right"].set_visible(False)
+  st.pyplot(fig,width=600)
   plt.close(fig)
 
 if page=="Model Performance":
@@ -170,25 +153,33 @@ if page=="Model Performance":
 if page=="Country Analysis":
   st.header("Monthly Solar Power Analysis")
   st.subheader("Average AC Power by Month")
-  monthly_data=dataset.groupby("Month")["AC_Power"].mean().reset_index()
+  monthly_data=country_data.groupby("Month")["AC_Power"].mean().reset_index()
   fig,ax=plt.subplots(figsize=(10, 5))
   sns.lineplot(data=monthly_data, x="Month", y="AC_Power", ax=ax)
   ax.set_xlabel("Month")
   ax.set_ylabel("Average AC Power")
   ax.set_title("Monthly Average AC Power")
-  st.pyplot(fig)
+  ax.tick_params(labelsize=9)
+  ax.grid(axis="y",linestyle="--",alpha=0.3)
+  ax.spines["top"].set_visible(False)
+  ax.spines["right"].set_visible(False)
+  st.pyplot(fig,width=600)
   plt.close(fig)
 
 if page=="Country Analysis":
   st.header("Hourly Solar Power Analysis")
   st.subheader("Average AC Power by Hour")
-  monthly_data=dataset.groupby("Hour")["AC_Power"].mean().reset_index()
+  hourly_data=country_data.groupby("Hour")["AC_Power"].mean().reset_index()
   fig,ax=plt.subplots(figsize=(10, 5))
-  sns.lineplot(data=monthly_data, x="Hour", y="AC_Power", ax=ax)
+  sns.lineplot(data=hourly_data, x="Hour", y="AC_Power", ax=ax)
   ax.set_xlabel("Hour")
   ax.set_ylabel("Average AC Power")
   ax.set_title("Hourly Average AC Power")
-  st.pyplot(fig)
+  ax.tick_params(labelsize=9)
+  ax.grid(axis="y",linestyle="--",alpha=0.3)
+  ax.spines["top"].set_visible(False)
+  ax.spines["right"].set_visible(False)
+  st.pyplot(fig,width=600)
   plt.close(fig)
 
 if page=="About Project":
@@ -226,6 +217,6 @@ if page=="SHAP Explanation":
             feature_names=preprocessor.get_feature_names_out())
     shap.plots.waterfall(explanation, show=False)
     fig = plt.gcf()
-    st.pyplot(fig)
+    st.pyplot(fig,width=900)
     plt.close(fig)
 
