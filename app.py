@@ -111,7 +111,7 @@ if page=="Model Performance":
   plt.close(fig)
 
 if page=="Country Analysis":
-  st.header("Country Performance Analysis")
+  st.markdown("## :green[Country Performance Analysis]")
   selected_country=st.selectbox("Select Country",
         ["All Countries", "Norway", "Brazil", "India", "Australia"])
   if selected_country=="All Countries":
@@ -151,7 +151,7 @@ if page=="Model Performance":
   st.bar_chart(importance.set_index("Feature"))
 
 if page=="Country Analysis":
-  st.header("Monthly Solar Power Analysis")
+  st.markdown("## :green[Monthly Solar Power Analysis]")
   st.subheader("Average AC Power by Month")
   monthly_data=country_data.groupby("Month")["AC_Power"].mean().reset_index()
   fig,ax=plt.subplots(figsize=(10, 5))
@@ -167,7 +167,7 @@ if page=="Country Analysis":
   plt.close(fig)
 
 if page=="Country Analysis":
-  st.header("Hourly Solar Power Analysis")
+  st.markdown("## :green[Hourly Solar Power Analysis]")
   st.subheader("Average AC Power by Hour")
   hourly_data=country_data.groupby("Hour")["AC_Power"].mean().reset_index()
   fig,ax=plt.subplots(figsize=(10, 5))
