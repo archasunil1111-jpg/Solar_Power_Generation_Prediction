@@ -204,7 +204,7 @@ based on country, temperature, irradiation, day, month and hour.
 - Joblib""")
 
 if page=="SHAP Explanation":
-  st.header("SHAP Feature Explanation")
+  st.markdown("## :green[SHAP Feature Explanation]")
   if st.button("Explain Prediction"):
     preprocessor=model.named_steps["preprocessor"]
     regressor=model.named_steps["regressor"]
