@@ -61,7 +61,7 @@ dataset=pd.read_csv("data/Solar data.csv")
 
 input_data=None
 if page in ["Power Prediction","SHAP Explanation"]:
-  st.header("Enter Solar Panel Details")
+  st.markdown("## :green[Enter Solar Panel Details]")
   country=st.selectbox("Select Country",options=["Norway","Brazil","India","Australia"])
   ambient_temp=st.number_input("Ambient Temperature",min_value=-12.0,max_value=40.0,value=25.0)
   module_temp=st.number_input("Module Temperature",min_value=-8.0,max_value=47.0,value=30.0)
@@ -83,11 +83,11 @@ if page in ["Power Prediction","SHAP Explanation"]:
     "Temperature_Difference":[temperature_difference]
   })
 if page=="Power Prediction":
- st.header("Power Prediction")
+ st.markdown("## :green[Power Prediction]")
  if st.button("Predict Solar Power"):
     prediction=model.predict(input_data)
 
-    st.success(f"Predicted AC Power:{prediction[0]:.3f}")
+    st.metric("Predicted AC Power (kW)",f"{prediction[0]:.3f}")
 
 
 
