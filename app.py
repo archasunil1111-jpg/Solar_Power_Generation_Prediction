@@ -79,6 +79,14 @@ if st.button("Compare All Countries"):
     st.bar_chart(comparison_df.set_index("Country"))
 
 
+st.header("Prediction Reliability Dashboard")
+st.subheader("Tuned Random Forest Performance")
+col1,col2,col3=st.columns(3)
+col1.metric("MAE","0.5930")
+col2.metric("RMSE","1.0983")
+col3.metric("R2 Score",0.9972)
+
+
 st.header("Country Performance Analysis")
 dataset=pd.read_csv("data/Solar data.csv")
 st.subheader("Average AC Power by Country")
