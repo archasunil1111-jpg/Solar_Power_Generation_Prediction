@@ -219,15 +219,6 @@ The dashboard will open in your default browser.
 - Extend the analysis with more solar power generation variables.
 - Integrate real-time solar generation data where available.
 
-## Author
-
-**Archa Sunil**
-
-B.Tech in Artificial Intelligence and Machine Learning
-
-GitHub: [archasunil1111-jpg](https://github.com/archasunil1111-jpg)
-
-LinkedIn: [Archa Sunil](https://linkedin.com/in/archasunilai)
 
 ---
 
