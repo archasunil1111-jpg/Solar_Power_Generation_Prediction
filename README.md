@@ -213,7 +213,7 @@ The dashboard will open in your default browser.
 
 ## Future Enhancements
 
-- Deploy the dashboard to a cloud platform.
+- Explore additional cloud deployment options and improve deployment scalability.
 - Explore additional Machine Learning algorithms.
 - Improve model generalization using additional datasets.
 - Extend the analysis with more solar power generation variables.
