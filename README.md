@@ -31,7 +31,7 @@ The dataset contains 35,136 records representing solar power generation observat
 | Problem type | Supervised Machine Learning |
 | Learning task | Regression |
 
-### Features Used
+## Features Used
 
 - Country
 - Ambient_Temperature
@@ -135,6 +135,58 @@ The project includes an interactive dashboard developed using Streamlit and Plot
 - **Model Explainability:** Feature importance and SHAP-based analysis.
 - **About Project:** Project information, workflow and technologies.
 
+## Live Demo
+
+The interactive dashboard is deployed using Streamlit.
+
+**Streamlit Community Cloud:**
+
+https://solar-power-prediction-shap.streamlit.app/
+
+**AWS EC2 Deployment:**
+
+http://65.2.153.168:8080
+
+**AWS Availability Note:**
+
+The AWS-hosted dashboard is accessible only while the EC2 instance is running and the Streamlit application is active.
+
+The EC2 instance may be stopped when the application is not being demonstrated to avoid ongoing compute costs. Therefore, the AWS link may be temporarily unavailable.
+
+The public IP address may also change if the EC2 instance is stopped and restarted.
+
+## AWS EC2 Deployment
+
+The application was deployed on Amazon Web Services (AWS) using an EC2 Linux instance.
+
+### Deployment Details
+
+- **Cloud Provider:** Amazon Web Services (AWS)
+- **Service:** Amazon EC2
+- **Instance Type:** t3.micro
+- **Region:** Asia Pacific (Mumbai)
+- **Operating System:** Amazon Linux 2023
+- **Application Framework:** Streamlit
+- **Python Version:** 3.11
+- **Scikit-learn Version:** 1.7.2
+- **Application Port:** 8080
+- **Deployment Method:** Background execution using nohup
+
+### Deployment Steps
+
+1. Launched an EC2 instance on AWS.
+2. Configured security group rules for application access and SSH.
+3. Installed Python and required dependencies.
+4. Transferred the application, dataset and trained model to the EC2 instance.
+5. Configured the Python virtual environment.
+6. Installed the required project libraries.
+7. Started the Streamlit application on port 8080.
+8. Configured background execution using nohup to keep the application running after closing the PuTTY session.
+
+### Deployment Evidence
+
+AWS deployment screenshots are available in the [`aws-deployment`](aws-deployment/) folder.
+
 ## Technologies Used
 
 | Category | Technologies |
@@ -158,6 +210,10 @@ Solar_Power_Generation_Prediction/
 ├── .devcontainer/
 │
 ├── Screenshots/
+│
+├── aws-deployment/
+│   ├── 01-ec2-instance.png
+│   └── 02-deployed-dashboard.png
 │
 ├── data/
 │   └── Solar data.csv
@@ -216,25 +272,6 @@ python -m streamlit run app.py
 ```
 
 The dashboard will open in your default browser.
-
-## Live Demo
-
-**Streamlit Application:** [Solar Power Prediction Dashboard](https://solar-power-prediction-shap.streamlit.app/)
-
-The interactive application is deployed using Streamlit Community Cloud.
-
-## AWS EC2 Deployment
-
-The application was also deployed on Amazon Web Services (AWS) using an EC2 Linux instance.
-
-- **Cloud Provider:** Amazon Web Services (AWS)
-- **Service:** Amazon EC2
-- **Instance Type:** t3.micro
-- **Region:** Asia Pacific (Mumbai)
-- **Application Framework:** Streamlit
-- **Deployment Status:** Temporarily stopped to avoid ongoing compute costs.
-
-**Note:** The AWS EC2 deployment is currently inactive because the instance is stopped. The Streamlit Community Cloud link above is available for accessing the application demo.
 
 ## Future Enhancements
 
