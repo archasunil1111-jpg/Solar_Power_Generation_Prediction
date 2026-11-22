@@ -410,7 +410,7 @@ if page == "Overview":
 
     st.markdown("""
     <div class="project-header">
-        <h1>SOLAR POWER PREDICTION AND PERFORMANCE ANALYSIS</h1>
+        <h1>SOLAR POWER GENERATION PREDICTION AND PERFORMANCE ANALYSIS</h1>
     </div>
     """, unsafe_allow_html=True)
 
