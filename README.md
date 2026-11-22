@@ -20,7 +20,7 @@ This project uses Machine Learning regression algorithms to predict AC power gen
 
 ## Dataset Description
 
-The dataset contains **35,136 records** representing solar power generation observations across four countries.
+The dataset contains 35,136 records representing solar power generation observations across four countries.
 
 | Attribute | Description |
 |---|---|
@@ -46,7 +46,7 @@ The target variable is `AC_Power`, representing the actual AC power generation r
 
 ## Project Workflow
 
-### 1. Exploratory Data Analysis
+### 1. Exploratory Data Analysis (EDA)
 
 Performed detailed data analysis to understand the dataset and identify important patterns.
 
@@ -66,20 +66,20 @@ Performed detailed data analysis to understand the dataset and identify importan
 - Identified numerical and categorical features.
 - Applied categorical encoding using OneHotEncoder.
 - Applied numerical feature scaling using StandardScaler.
-- Created the `Temperature_Difference` feature.
+- Created the Temperature_Difference feature.
 - Split the dataset chronologically into training and testing sets.
 
 ### 3. Model Development
 
 The following regression algorithms were trained and evaluated:
 
-1. Linear Regression
-2. Decision Tree Regressor
-3. Random Forest Regressor
-4. Gradient Boosting Regressor
-5. Voting Regressor
-6. Tuned Random Forest Regressor
-7. Tuned Gradient Boosting Regressor
+- Linear Regression
+- Decision Tree Regressor
+- Random Forest Regressor
+- Gradient Boosting Regressor
+- Voting Regressor
+- Tuned Random Forest Regressor
+- Tuned Gradient Boosting Regressor
 
 TimeSeriesSplit cross-validation and GridSearchCV were used for model evaluation and hyperparameter optimization.
 
@@ -92,7 +92,7 @@ The models were evaluated using:
 - Root Mean Squared Error (RMSE)
 - R² Score
 
-### Model Performance Comparison
+#### Model Performance Comparison
 
 | Model | MAE | RMSE | R² Score |
 |---|---:|---:|---:|
@@ -102,7 +102,7 @@ The models were evaluated using:
 | Gradient Boosting | 0.6356 | 1.1184 | 0.9970 |
 | Voting Regressor | 0.8846 | 1.2580 | 0.9963 |
 | Tuned Random Forest | 0.5791 | 1.1037 | 0.9971 |
-| **Tuned Gradient Boosting** | **0.6000** | **1.0986** | **0.9971** |
+| Tuned Gradient Boosting | 0.6000 | 1.0986 | 0.9971 |
 
 **Selected Model: Tuned Gradient Boosting Regressor**
 
@@ -115,6 +115,7 @@ The reported metrics are based on the held-out test dataset.
 SHAP (SHapley Additive exPlanations) was used to understand model predictions and analyze feature contributions.
 
 The project includes:
+
 - Feature importance analysis
 - SHAP explainability analysis
 - Actual vs. predicted comparison
@@ -126,13 +127,13 @@ The project includes an interactive dashboard developed using Streamlit and Plot
 
 ### Dashboard Pages
 
-1. **Overview:** Project summary, dataset information and model performance.
-2. **Power Prediction:** Interactive solar power generation prediction.
-3. **Country Insights:** Country-wise data exploration and analysis.
-4. **Time Analysis:** Monthly and hourly generation patterns.
-5. **Model Performance:** Evaluation metrics and model comparisons.
-6. **Model Explainability:** Feature importance and SHAP-based analysis.
-7. **About Project:** Project information, workflow and technologies.
+- **Overview:** Project summary, dataset information and model performance.
+- **Power Prediction:** Interactive solar power generation prediction.
+- **Country Insights:** Country-wise data exploration and analysis.
+- **Time Analysis:** Monthly and hourly generation patterns.
+- **Model Performance:** Evaluation metrics and model comparisons.
+- **Model Explainability:** Feature importance and SHAP-based analysis.
+- **About Project:** Project information, workflow and technologies.
 
 ## Technologies Used
 
@@ -147,11 +148,16 @@ The project includes an interactive dashboard developed using Streamlit and Plot
 | Dashboard | Streamlit |
 | Development Environment | Jupyter Notebook, VS Code |
 | Version Control | Git, GitHub |
+| Cloud Deployment | AWS EC2, Streamlit Community Cloud |
 
 ## Project Structure
 
 ```text
 Solar_Power_Generation_Prediction/
+│
+├── .devcontainer/
+│
+├── Screenshots/
 │
 ├── data/
 │   └── Solar data.csv
@@ -211,6 +217,25 @@ python -m streamlit run app.py
 
 The dashboard will open in your default browser.
 
+## Live Demo
+
+**Streamlit Application:** [Solar Power Prediction Dashboard](https://solar-power-prediction-shap.streamlit.app/)
+
+The interactive application is deployed using Streamlit Community Cloud.
+
+## AWS EC2 Deployment
+
+The application was also deployed on Amazon Web Services (AWS) using an EC2 Linux instance.
+
+- **Cloud Provider:** Amazon Web Services (AWS)
+- **Service:** Amazon EC2
+- **Instance Type:** t3.micro
+- **Region:** Asia Pacific (Mumbai)
+- **Application Framework:** Streamlit
+- **Deployment Status:** Temporarily stopped to avoid ongoing compute costs.
+
+**Note:** The AWS EC2 deployment is currently inactive because the instance is stopped. The Streamlit Community Cloud link above is available for accessing the application demo.
+
 ## Future Enhancements
 
 - Explore additional cloud deployment options and improve deployment scalability.
@@ -219,7 +244,6 @@ The dashboard will open in your default browser.
 - Extend the analysis with more solar power generation variables.
 - Integrate real-time solar generation data where available.
 
+## Conclusion
 
----
-
-*This project was developed as an end-to-end Machine Learning project covering data analysis, preprocessing, model development, evaluation, explainability and interactive dashboard development.*
+This project demonstrates an end-to-end Machine Learning workflow for solar power generation prediction and performance analysis, covering data exploration, preprocessing, model development, evaluation, explainability and interactive dashboard development.
