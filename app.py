@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,9 +5,7 @@ import joblib
 import plotly.express as px
 from pathlib import Path
 
-# ============================================================
 # 1. PAGE CONFIGURATION
-# ============================================================
 
 st.set_page_config(
     page_title="Solar Power Generation | Analytics Dashboard",
@@ -16,17 +13,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ============================================================
 # 2. PROJECT PATHS
-# ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_PATH = BASE_DIR / "data" / "Solar data.csv"
 MODEL_PATH = BASE_DIR / "models" / "solar_power_model.pkl"
 
-# ============================================================
 # 3. CUSTOM DARK THEME
-# ============================================================
 
 st.markdown("""
 <style>
@@ -229,9 +222,7 @@ div[data-testid="stForm"] {
 </style>
 """, unsafe_allow_html=True)
 
-# ============================================================
 # 4. CHECK PROJECT FILES
-# ============================================================
 
 if not DATA_PATH.exists():
     st.error("Dataset file not found.")
@@ -245,9 +236,7 @@ if not MODEL_PATH.exists():
     st.info("Make sure solar_power_model.pkl is inside the models folder.")
     st.stop()
 
-# ============================================================
 # 5. LOAD DATA AND MODEL
-# ============================================================
 
 @st.cache_data
 def load_data():
@@ -279,9 +268,7 @@ except Exception as error:
     st.error(f"Could not load the project data or model: {error}")
     st.stop()
 
-# ============================================================
 # 6. MODEL FEATURES AND DATA VALIDATION
-# ============================================================
 
 FEATURES = [
     "Country",
@@ -313,9 +300,7 @@ if analysis_data.empty:
     st.error("The dataset is empty.")
     st.stop()
 
-# ============================================================
 # 7. CHART SETTINGS
-# ============================================================
 
 CHART_COLORS = [
     "#14B8A6",
@@ -368,9 +353,7 @@ def page_header(title, subtitle):
     st.divider()
 
 
-# ============================================================
 # 8. SIDEBAR NAVIGATION
-# ============================================================
 
 PAGES = [
     "Overview",
@@ -402,9 +385,7 @@ with st.sidebar:
 
 page = st.session_state.selected_page
 
-# ============================================================
 # 9. OVERVIEW DASHBOARD
-# ============================================================
 
 if page == "Overview":
 
@@ -450,10 +431,7 @@ if page == "Overview":
     with col3:
         st.metric("R² Score", "0.9971")
 
-
-# ============================================================
 # 10. POWER PREDICTION
-# ============================================================
 
 elif page == "Power Prediction":
 
@@ -577,9 +555,7 @@ elif page == "Power Prediction":
             )
 
 
-# ============================================================
 # 11. COUNTRY INSIGHTS
-# ============================================================
 
 elif page == "Country Insights":
 
@@ -645,9 +621,7 @@ elif page == "Country Insights":
     )
 
 
-# ============================================================
 # 12. TIME ANALYSIS
-# ============================================================
 
 elif page == "Time Analysis":
 
@@ -728,10 +702,7 @@ elif page == "Time Analysis":
         width="stretch"
     )
 
-
-# ============================================================
 # 13. MODEL PERFORMANCE
-# ============================================================
 
 elif page == "Model Performance":
 
@@ -866,9 +837,7 @@ elif page == "Model Performance":
         st.metric("R² Score", "0.9971")
 
 
-# ============================================================
 # 14. MODEL EXPLAINABILITY
-# ============================================================
 
 elif page == "Model Explainability":
 
@@ -977,9 +946,7 @@ elif page == "Model Explainability":
         )
 
 
-# ============================================================
 # 15. ABOUT PROJECT
-# ============================================================
 
 elif page == "About Project":
 
