@@ -1,4 +1,4 @@
-# Solar Power Generation Prediction and Performance Analysis
+# SolarGen AI – Solar Power Generation Prediction & Performance Analysis
 
 An end-to-end Machine Learning project for predicting solar power generation and analyzing system performance across different geographical regions.
 
